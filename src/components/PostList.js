@@ -7,24 +7,26 @@ class PostList extends Component {
     
         this.state = {
             // Step1
-             posts: []
+             posts: [],
+             errorMsg: []
         }
     }
 
     componentDidMount() {
         // Step2
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('https://jsonplaceholder.typicode.com/posts1')
         .then(response => {
             console.log(response)
             this.setState({posts: response.data})
         })
         .catch(error => {
             console.log(error)
+            this.setState({errorMsg: 'Error retrieving data'})
         })
     }
     
     render() {
-        const { posts } = this.state
+        const { posts, errorMsg } = this.state
         return (
             <div>
                 List of posts
@@ -33,6 +35,7 @@ class PostList extends Component {
                     posts.map(post => <div key={post.id}>{post.title}</div>) :
                     null
                 }
+                { errorMsg ? <div>{errorMsg}</div> : null}
             </div>
         )
     }
